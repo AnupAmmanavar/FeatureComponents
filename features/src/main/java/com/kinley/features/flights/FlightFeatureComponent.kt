@@ -1,11 +1,13 @@
+@file:Suppress("EXPERIMENTAL_API_USAGE")
+
 package com.kinley.features.flights
 
+import com.kinley.features.ext.filterSuccess
 import com.kinley.features.featurecomponent.FeatureComponent
+import com.kinley.features.featurecomponent.flux.Async
+import com.kinley.features.featurecomponent.flux.Async.*
 import com.kinley.features.flights.domain.Flight
-import com.kinley.features.flights.flux.FetchFlights
-import com.kinley.features.flights.flux.FlightReducer
-import com.kinley.features.flights.flux.FlightSelected
-import com.kinley.features.flights.flux.FlightStore
+import com.kinley.features.flights.flux.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -26,8 +28,32 @@ class FlightFeatureComponent(
     init {
         store.stateStream()
             .distinctUntilChanged { old, new -> old == new }
+            .onEach { render(it) }
+            .launchIn(this)
+
+
+        /**
+         * Some change in events that affected by state change need to be propogated to the Outside world
+         */
+        store.stateStream()
+            .filterSuccess()
+            .distinctUntilChanged { old, new -> old.selectedFlight == new.selectedFlight }
+            .map { it.selectedFlight }
+            .filterNotNull()
             .onEach {
-                val flightsUiModel = it.flights.map { flight ->
+                eventDispatcher.onFlightSelection(it)
+            }
+            .launchIn(this)
+
+    }
+
+    private fun render(async: Async<FlightState>) {
+        when (async) {
+            is Uninitialized -> TODO()
+            is Loading -> TODO()
+            is Failure -> TODO()
+            is Success -> {
+                val flightsUiModel = async.t.flights.map { flight ->
                     FlightUiModel(
                         flightName = flight.flightName,
                         airline = flight.airlines,
@@ -36,23 +62,7 @@ class FlightFeatureComponent(
                 }
                 uiState.value = FlightsUiState(flightsUiModel)
             }
-            .launchIn(this)
-
-
-        /**
-         * Some change in events that affected by state change need to be propogated to the Outside world
-         */
-        store.stateStream()
-            .distinctUntilChanged { old, new ->
-                old.selectedFlight == new.selectedFlight
-            }
-            .map { it.selectedFlight }
-            .filterNotNull()
-            .onEach {
-                eventDispatcher.onFlightSelection(it)
-            }
-            .launchIn(this)
-
+        }
     }
 
     override fun dateChange(date: Date) {

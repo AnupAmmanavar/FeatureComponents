@@ -2,12 +2,11 @@
 
 package com.kinley.features.featurecomponent.flux
 
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-interface Store<T, A: Action> {
+interface Store<S, A: Action> {
 
-    fun stateStream(): StateFlow<T>
+    fun stateStream(): StateFlow<Async<S>>
 
     fun dispatchActions(action: A)
 

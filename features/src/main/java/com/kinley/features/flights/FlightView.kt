@@ -19,7 +19,7 @@ class FlightView(context: Context? = null, attributeSet: AttributeSet? = null, d
     fun create(uiStateFlow: StateFlow<FlightsUiState>, uiDelegate: FlightUiDelegate) {
 
         btn_nextday.setOnClickListener {
-            uiDelegate.flightClick(Flight("Flight", "Indigo"))
+            uiDelegate.flightClick(Flight("Flight", "Indigo", 0.0))
         }
 
         launch {

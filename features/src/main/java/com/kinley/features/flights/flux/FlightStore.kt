@@ -2,6 +2,7 @@
 
 package com.kinley.features.flights.flux
 
+import com.kinley.features.featurecomponent.flux.Async
 import com.kinley.features.featurecomponent.flux.Store
 import kotlinx.coroutines.flow.StateFlow
 
@@ -10,7 +11,7 @@ class FlightStore(
     private val reducer: FlightReducer
 ) : Store<FlightState, FlightActions> {
 
-    override fun stateStream(): StateFlow<FlightState> = reducer.state
+//    override fun stateStream(): StateFlow<FlightState> = reducer.state
 
     override fun dispatchActions(action: FlightActions) = processIntent(action)
 
@@ -21,6 +22,8 @@ class FlightStore(
             is FetchFlights -> reducer.setLoading()
         }.exhaustive
     }
+
+    override fun stateStream(): StateFlow<Async<FlightState>> = TODO("Not yet implemented")
 
 }
 
