@@ -14,3 +14,7 @@ interface Reducer<T> {
 fun <T> Reducer<T>.withState(block: (T) -> T) {
     reduce(block(state.value))
 }
+
+fun <T> Reducer<T>.setState(block: T.() -> T) {
+    reduce(state.value.block())
+}
