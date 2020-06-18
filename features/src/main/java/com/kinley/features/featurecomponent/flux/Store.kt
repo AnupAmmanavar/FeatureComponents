@@ -7,9 +7,7 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface Store<T, A: Action> {
 
-    val state: MutableStateFlow<T>
-
-    fun stateStream(): StateFlow<T> = state
+    fun stateStream(): StateFlow<T>
 
     fun dispatchActions(action: A)
 

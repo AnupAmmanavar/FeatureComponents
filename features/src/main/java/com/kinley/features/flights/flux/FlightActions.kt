@@ -7,3 +7,4 @@ sealed class FlightActions: Action
 
 data class FlightsFetched(val flights: List<Flight>): FlightActions()
 data class DateChanged(val date: String): FlightActions()
+data class FlightSelected(val selectedFlight: Flight): FlightActions()
