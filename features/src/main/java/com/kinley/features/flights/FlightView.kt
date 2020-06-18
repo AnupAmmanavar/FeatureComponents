@@ -3,6 +3,7 @@ package com.kinley.features.flights
 import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
+import com.kinley.features.flights.domain.Flight
 import kotlinx.android.synthetic.main.flight_view.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,7 +19,7 @@ class FlightView(context: Context? = null, attributeSet: AttributeSet? = null, d
     fun create(uiStateFlow: StateFlow<FlightsUiState>, uiDelegate: FlightUiDelegate) {
 
         btn_nextday.setOnClickListener {
-            uiDelegate.flightClick("flight")
+            uiDelegate.flightClick(Flight("Flight", "Indigo"))
         }
 
         launch {

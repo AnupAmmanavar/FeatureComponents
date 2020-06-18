@@ -1,10 +1,17 @@
 package com.kinley.features.flights
 
 import com.kinley.features.featurecomponent.FeatureComponent
+import com.kinley.features.flights.domain.Flight
+import com.kinley.features.flights.flux.FetchFlights
+import com.kinley.features.flights.flux.FlightReducer
+import com.kinley.features.flights.flux.FlightSelected
+import com.kinley.features.flights.flux.FlightStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.*
+import java.util.*
+
 
 @ExperimentalCoroutinesApi
 class FlightFeatureComponent(
@@ -12,22 +19,52 @@ class FlightFeatureComponent(
 ) : FeatureComponent<FlightView, FlightEventDispatcher>, FlightEventReceiver,
     FlightUiDelegate, CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
 
+    private val store: FlightStore = FlightStore(FlightReducer())
+
     private val uiState = MutableStateFlow(FlightsUiState())
 
-    override fun dateChange(date: String) {
+    init {
+        store.stateStream()
+            .distinctUntilChanged { old, new -> old == new }
+            .onEach {
+                val flightsUiModel = it.flights.map { flight ->
+                    FlightUiModel(
+                        flightName = flight.flightName,
+                        airline = flight.airlines,
+                        flightCost = flight.cost
+                    )
+                }
+                uiState.value = FlightsUiState(flightsUiModel)
+            }
+            .launchIn(this)
+
+
+        /**
+         * Some change in events that affected by state change need to be propogated to the Outside world
+         */
+        store.stateStream()
+            .distinctUntilChanged { old, new ->
+                old.selectedFlight == new.selectedFlight
+            }
+            .map { it.selectedFlight }
+            .filterNotNull()
+            .onEach {
+                eventDispatcher.onFlightSelection(it)
+            }
+            .launchIn(this)
+
+    }
+
+    override fun dateChange(date: Date) {
         fetchFlights(date)
     }
 
-    override fun flightRange(minAmount: Double) {
-        TODO("Not yet implemented")
+    override fun flightClick(flight: Flight) {
+        store.dispatchActions(FlightSelected(flight))
     }
 
-    override fun flightClick(flight: String) {
-        eventDispatcher.onFlightSelection(flight)
-    }
-
-    private fun fetchFlights(date: String) {
-        // Make api call to fetch flights for the given date
+    private fun fetchFlights(date: Date) {
+        store.dispatchActions(FetchFlights(date))
     }
 
 

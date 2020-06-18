@@ -6,6 +6,7 @@ data class FlightsUiState(
 
 data class FlightUiModel(
     val flightName: String,
+    val airline: String,
     val flightCost: Double
 )
 

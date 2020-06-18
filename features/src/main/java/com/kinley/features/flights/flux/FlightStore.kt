@@ -6,7 +6,7 @@ import com.kinley.features.featurecomponent.flux.Store
 import kotlinx.coroutines.flow.StateFlow
 
 
-class FeatureStore(
+class FlightStore(
     private val reducer: FlightReducer
 ) : Store<FlightState, FlightActions> {
 
@@ -17,8 +17,8 @@ class FeatureStore(
     private fun processIntent(action: FlightActions) {
         when (action) {
             is FlightsFetched -> reducer.updateFlights(action.flights)
-            is DateChanged -> TODO()
             is FlightSelected -> reducer.updateSelectedFlight(action.selectedFlight)
+            is FetchFlights -> reducer.setLoading()
         }.exhaustive
     }
 
