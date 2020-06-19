@@ -11,8 +11,6 @@ class FlightStore(
     private val reducer: FlightReducer
 ) : Store<FlightState, FlightActions> {
 
-//    override fun stateStream(): StateFlow<FlightState> = reducer.state
-
     override fun dispatchActions(action: FlightActions) = processIntent(action)
 
     private fun processIntent(action: FlightActions) {
@@ -23,7 +21,7 @@ class FlightStore(
         }.exhaustive
     }
 
-    override fun stateStream(): StateFlow<Async<FlightState>> = TODO("Not yet implemented")
+    override fun stateStream(): StateFlow<Async<FlightState>> = reducer.state
 
 }
 
