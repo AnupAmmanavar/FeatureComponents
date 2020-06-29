@@ -8,6 +8,7 @@ import com.kinley.features.featurecomponent.flux.Async
 import com.kinley.features.featurecomponent.flux.Async.*
 import com.kinley.features.flights.domain.Flight
 import com.kinley.features.flights.flux.*
+import com.kinley.features.flights.setup.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -18,7 +19,8 @@ import java.util.*
 @ExperimentalCoroutinesApi
 class FlightFeatureComponent(
     override val eventDispatcher: FlightEventDispatcher
-) : FeatureComponent<FlightView, FlightEventDispatcher>, FlightEventReceiver,
+) : FeatureComponent<FlightView, FlightEventDispatcher>,
+    FlightEventReceiver,
     FlightUiDelegate, CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
 
     private val store: FlightStore = FlightStore(FlightReducer())
@@ -60,7 +62,9 @@ class FlightFeatureComponent(
                         flightCost = flight.cost
                     )
                 }
-                uiState.value = FlightsUiState(flightsUiModel)
+                uiState.value = FlightsUiState(
+                    flightsUiModel
+                )
             }
         }
     }

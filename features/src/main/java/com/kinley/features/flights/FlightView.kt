@@ -4,6 +4,8 @@ import android.content.Context
 import android.util.AttributeSet
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.kinley.features.flights.domain.Flight
+import com.kinley.features.flights.setup.FlightUiDelegate
+import com.kinley.features.flights.setup.FlightsUiState
 import kotlinx.android.synthetic.main.flight_view.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

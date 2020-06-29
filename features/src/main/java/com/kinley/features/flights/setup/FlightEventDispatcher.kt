@@ -1,4 +1,4 @@
-package com.kinley.features.flights
+package com.kinley.features.flights.setup
 
 import com.kinley.features.featurecomponent.EventDispatcher
 import com.kinley.features.flights.domain.Flight
@@ -9,7 +9,6 @@ import com.kinley.features.flights.domain.Flight
  * 1. Change in FeatureState needs to be propagated
  * 2. Other events like Clicks that are controlled by the parent and not handled by the current FeatureComponent
  */
-interface FlightEventDispatcher :
-    EventDispatcher {
+interface FlightEventDispatcher : EventDispatcher {
     fun onFlightSelection(flight: Flight)
 }

@@ -4,8 +4,14 @@ import com.kinley.features.featurecomponent.flux.Action
 import com.kinley.features.flights.domain.Flight
 import java.util.*
 
-sealed class FlightActions: Action
+sealed class FlightActions: Action {
 
-data class FlightsFetched(val flights: List<Flight>): FlightActions()
-data class FetchFlights(val date: Date): FlightActions()
-data class FlightSelected(val selectedFlight: Flight): FlightActions()
+    // API call fetches the new list of Flights
+    data class FlightsFetched(val flights: List<Flight>) : FlightActions()
+
+    // Request to fetch the flights for the specified date
+    data class FetchFlights(val date: Date) : FlightActions()
+
+    // Updates the selected flight
+    data class FlightSelected(val selectedFlight: Flight) : FlightActions()
+}
