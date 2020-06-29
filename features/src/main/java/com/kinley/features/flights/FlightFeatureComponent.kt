@@ -8,6 +8,7 @@ import com.kinley.features.featurecomponent.flux.Async
 import com.kinley.features.featurecomponent.flux.Async.*
 import com.kinley.features.flights.domain.Flight
 import com.kinley.features.flights.flux.*
+import com.kinley.features.flights.flux.FlightActions.*
 import com.kinley.features.flights.setup.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
