@@ -9,6 +9,9 @@ import com.kinley.features.featurecomponent.flux.Async.*
 import com.kinley.features.flights.domain.Flight
 import com.kinley.features.flights.flux.*
 import com.kinley.features.flights.flux.FlightActions.*
+import com.kinley.features.flights.presentation.FlightUiModel
+import com.kinley.features.flights.presentation.FlightView
+import com.kinley.features.flights.presentation.FlightsUiState
 import com.kinley.features.flights.setup.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -63,9 +66,10 @@ class FlightFeatureComponent(
                         flightCost = flight.cost
                     )
                 }
-                uiState.value = FlightsUiState(
-                    flightsUiModel
-                )
+                uiState.value =
+                    FlightsUiState(
+                        flightsUiModel
+                    )
             }
         }
     }

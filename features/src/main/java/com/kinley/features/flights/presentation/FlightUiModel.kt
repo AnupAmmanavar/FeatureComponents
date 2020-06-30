@@ -1,11 +1,4 @@
-package com.kinley.features.flights.setup
-
-/**
- * It composes of multiple UiModels.
- */
-data class FlightsUiState(
-    val flightsUiModel: List<FlightUiModel> = arrayListOf()
-)
+package com.kinley.features.flights.presentation
 
 /**
  * A piece of UI is associated with the UiModel which determines its state
@@ -15,4 +8,3 @@ data class FlightUiModel(
     val airline: String,
     val flightCost: Double
 )
-
