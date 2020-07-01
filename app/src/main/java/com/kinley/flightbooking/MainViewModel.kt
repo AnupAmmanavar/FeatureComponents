@@ -1,9 +1,11 @@
 package com.kinley.flightbooking
 
+import android.util.Log
 import com.kinley.features.hotels.HotelFeatureComponent
 import com.kinley.features.hotels.HotelViewModel
 import com.kinley.features.hotels.domain.Hotel
 import com.kinley.features.hotels.setup.HotelEventDispatcher
+import java.util.*
 
 class MainViewModel : HotelEventDispatcher {
 
@@ -14,7 +16,11 @@ class MainViewModel : HotelEventDispatcher {
         )
 
     override fun onHotelSelected(hotel: Hotel) {
-        TODO("Not yet implemented")
+        Log.d("BookingTag", "$hotel")
+    }
+
+    fun onDateChanged(date: Date) {
+        hotelComponent.onDateChange(date)
     }
 
 }

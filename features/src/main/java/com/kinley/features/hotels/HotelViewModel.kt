@@ -2,6 +2,7 @@
 
 package com.kinley.features.hotels
 
+import android.util.Log
 import com.kinley.features.featurecomponent.EventReceiver
 import com.kinley.features.hotels.domain.Hotel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -17,7 +18,7 @@ class HotelViewModel : EventReceiver {
     val hotelSelected: StateFlow<Hotel?> = _hotelSelectedMutable
 
     fun dateChange(date: Date) {
-
+        Log.d("BookingTag", "$date")
     }
 
     fun hotelSelected(hotel: Hotel) {

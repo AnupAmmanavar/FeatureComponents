@@ -7,7 +7,9 @@ import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.kinley.features.R
+import com.kinley.features.hotels.domain.Hotel
 import com.kinley.features.hotels.setup.HotelUiDelegate
+import kotlinx.android.synthetic.main.hotel_view.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -26,6 +28,10 @@ class HotelView @JvmOverloads constructor(context: Context? = null, attributeSet
                 // update with new UiState
             }
             .launchIn(this)
+
+        tv_header.setOnClickListener {
+            uiDelegate.onHotelClicked(Hotel("Brindavan", 200, "Dharwad"))
+        }
 
     }
 }
