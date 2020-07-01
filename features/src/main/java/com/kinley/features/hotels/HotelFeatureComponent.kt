@@ -8,16 +8,16 @@ import com.kinley.features.hotels.presentation.HotelView
 import com.kinley.features.hotels.setup.HotelEventDispatcher
 import com.kinley.features.hotels.setup.HotelEventReceiver
 import com.kinley.features.hotels.setup.HotelUiDelegate
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import java.util.*
-import kotlin.coroutines.CoroutineContext
 
 class HotelFeatureComponent(
     override val eventDispatcher: HotelEventDispatcher,
-    override val coroutineContext: CoroutineContext,
     private val vm: HotelViewModel
-) : FeatureComponent<HotelView, HotelEventDispatcher>, HotelEventReceiver, HotelUiDelegate {
+) : FeatureComponent<HotelView, HotelEventDispatcher>, HotelEventReceiver, HotelUiDelegate, CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
 
     private val uiState: Flow<HotelUiState> =
         combine(vm.hotels, vm.hotelSelected) { hotels, selectedHotel ->
