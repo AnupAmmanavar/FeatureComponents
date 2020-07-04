@@ -1,3 +1,2 @@
-include ':features'
-include ':app'
+include (":features", ":app")
 rootProject.name = "FlightBooking"
