@@ -1,7 +1,6 @@
 package com.kinley.features.hotels
 
 import com.kinley.features.featurecomponent.FeatureComponent
-import com.kinley.features.hotels.domain.Hotel
 import com.kinley.features.hotels.presentation.HotelUiModel
 import com.kinley.features.hotels.presentation.HotelUiState
 import com.kinley.features.hotels.presentation.HotelView
@@ -14,6 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
 import java.util.*
 
+@Suppress("EXPERIMENTAL_API_USAGE")
 class HotelFeatureComponent(
     override val eventDispatcher: HotelEventDispatcher,
     private val vm: HotelViewModel
@@ -43,8 +43,9 @@ class HotelFeatureComponent(
      * Notify the business-logic layer of the FeatureComponent i.e [HotelViewModel] and
      * also dispatches the event to the outside world.
      */
-    override fun onHotelClicked(hotel: Hotel) {
-        vm.hotelSelected(hotel)
+    override fun onHotelClicked(id: String) {
+        vm.updateSelectedHotel(id)
+        val hotel = vm.hotelSelected.value ?: return
 
         // Propagate the event to the outside world
         eventDispatcher.onHotelSelected(hotel)

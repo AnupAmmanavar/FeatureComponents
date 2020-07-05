@@ -12,11 +12,21 @@
         <variable
             name="cost"
             type="Integer" />
+
+        <variable
+            name="isSelected"
+            type="Boolean" />
+
+        <variable
+            name="onClick"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@{isSelected ? @drawable/bg_selected_hotel : null}"
+        android:onClick="@{onClick}">
 
         <TextView
             android:id="@+id/tv_hotel_name"

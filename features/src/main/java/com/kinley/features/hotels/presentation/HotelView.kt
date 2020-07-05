@@ -8,7 +8,6 @@ import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.kinley.features.HotelViewBindingModel_
 import com.kinley.features.R
-import com.kinley.features.hotels.domain.Hotel
 import com.kinley.features.hotels.setup.HotelUiDelegate
 import kotlinx.android.synthetic.main.hotel_view.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -25,37 +24,34 @@ class HotelView @JvmOverloads constructor(
     ConstraintLayout(context, attributeSet, defStyle),
     CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
 
-    private var hotels: List<HotelUiModel> = listOf()
+    private lateinit var ui: HotelUiState
 
     init {
         View.inflate(context, R.layout.hotel_view, this)
     }
 
     fun create(uiState: Flow<HotelUiState>, uiDelegate: HotelUiDelegate) {
-        uiState
-            .onEach {
-                // update with new UiState
-            }
-            .launchIn(this)
-
-        tv_header.setOnClickListener {
-            uiDelegate.onHotelClicked(Hotel("Brindavan", 200, "Dharwad"))
-        }
 
         rv_hotels.withModels {
 
-            hotels.onEach {
+            if (!this@HotelView::ui.isInitialized) return@withModels
+
+            ui.hotels.onEach { hotel ->
                 HotelViewBindingModel_()
-                    .id(it.name)
-                    .name(it.name)
-                    .cost(it.cost)
+                    .id(hotel.name)
+                    .name(hotel.name)
+                    .cost(hotel.cost)
+                    .isSelected(hotel.name == ui.selectedHotel?.name)
+                    .onClick { _ ->
+                        uiDelegate.onHotelClicked(hotel.name)
+                    }
                     .addTo(this)
             }
         }
 
         uiState
             .onEach {
-                hotels = it.hotels
+                ui = it
                 rv_hotels.requestModelBuild()
             }
             .launchIn(this)

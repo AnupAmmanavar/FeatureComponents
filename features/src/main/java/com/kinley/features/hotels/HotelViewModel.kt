@@ -32,8 +32,10 @@ class HotelViewModel : EventReceiver {
         Log.d("BookingTag", "$date")
     }
 
-    fun hotelSelected(hotel: Hotel) {
-
+    fun updateSelectedHotel(id: String) {
+        _hotelSelectedMutable.value = _hotelsMutable.value.first {
+            it.name == id
+        }
     }
 
 }

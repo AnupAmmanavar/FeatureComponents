@@ -16,7 +16,5 @@ class MainActivity : AppCompatActivity() {
 
         vm.hotelComponent.render(hotel_view)
 
-        vm.onDateChanged(Date())
-
     }
 }
