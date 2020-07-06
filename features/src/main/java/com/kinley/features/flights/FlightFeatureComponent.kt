@@ -2,17 +2,19 @@
 
 package com.kinley.features.flights
 
-import com.kinley.features.ext.filterSuccess
 import com.kinley.features.featurecomponent.FeatureComponent
-import com.kinley.features.featurecomponent.flux.Async
-import com.kinley.features.featurecomponent.flux.Async.*
 import com.kinley.features.flights.domain.Flight
-import com.kinley.features.flights.flux.*
-import com.kinley.features.flights.flux.FlightActions.*
+import com.kinley.features.flights.flux.FlightActions.FetchFlights
+import com.kinley.features.flights.flux.FlightActions.FlightSelected
+import com.kinley.features.flights.flux.FlightReducer
+import com.kinley.features.flights.flux.FlightState
+import com.kinley.features.flights.flux.FlightStore
 import com.kinley.features.flights.presentation.FlightUiModel
 import com.kinley.features.flights.presentation.FlightView
 import com.kinley.features.flights.presentation.FlightsUiState
-import com.kinley.features.flights.setup.*
+import com.kinley.features.flights.setup.FlightEventDispatcher
+import com.kinley.features.flights.setup.FlightEventReceiver
+import com.kinley.features.flights.setup.FlightUiDelegate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -42,7 +44,6 @@ class FlightFeatureComponent(
          * Some change in events that affected by state change need to be propogated to the Outside world
          */
         store.stateStream()
-            .filterSuccess()
             .distinctUntilChanged { old, new -> old.selectedFlight == new.selectedFlight }
             .map { it.selectedFlight }
             .filterNotNull()
@@ -53,25 +54,20 @@ class FlightFeatureComponent(
 
     }
 
-    private fun render(async: Async<FlightState>) {
-        when (async) {
-            is Uninitialized -> TODO()
-            is Loading -> TODO()
-            is Failure -> TODO()
-            is Success -> {
-                val flightsUiModel = async.t.flights.map { flight ->
-                    FlightUiModel(
-                        flightName = flight.flightName,
-                        airline = flight.airlines,
-                        flightCost = flight.cost
-                    )
-                }
-                uiState.value =
-                    FlightsUiState(
-                        flightsUiModel
-                    )
-            }
+    private fun render(state: FlightState) {
+
+        val flightsUiModel = state.flights.map { flight ->
+            FlightUiModel(
+                flightName = flight.flightName,
+                airline = flight.airlines,
+                flightCost = flight.cost
+            )
         }
+        uiState.value =
+            FlightsUiState(
+                flightsUiModel
+            )
+
     }
 
     override fun dateChange(date: Date) {

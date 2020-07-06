@@ -2,7 +2,6 @@
 
 package com.kinley.features.flights.flux
 
-import com.kinley.features.featurecomponent.flux.Async
 import com.kinley.features.featurecomponent.flux.Reducer
 import com.kinley.features.featurecomponent.flux.setState
 import com.kinley.features.flights.domain.Flight
@@ -10,8 +9,15 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 class FlightReducer : Reducer<FlightState> {
 
-    override var state: MutableStateFlow<Async<FlightState>> =
-        MutableStateFlow(Async.Uninitialized)
+    override var state: MutableStateFlow<FlightState> =
+        MutableStateFlow(
+            FlightState(
+                flights = arrayListOf(),
+                date = null,
+                selectedFlight = null,
+                loading = false
+            )
+        )
 
     fun updateFlights(flights: List<Flight>) = setState {
         copy(flights = flights, loading = false)
