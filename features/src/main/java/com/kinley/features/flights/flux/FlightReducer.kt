@@ -2,8 +2,8 @@
 
 package com.kinley.features.flights.flux
 
-import com.kinley.features.featurecomponent.flux.Reducer
-import com.kinley.features.featurecomponent.flux.setState
+import com.kinley.features.flux.Reducer
+import com.kinley.features.flux.setState
 import com.kinley.features.flights.domain.Flight
 import kotlinx.coroutines.flow.MutableStateFlow
 

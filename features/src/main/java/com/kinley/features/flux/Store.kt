@@ -1,6 +1,6 @@
 @file:Suppress("EXPERIMENTAL_API_USAGE")
 
-package com.kinley.features.featurecomponent.flux
+package com.kinley.features.flux
 
 import kotlinx.coroutines.flow.StateFlow
 

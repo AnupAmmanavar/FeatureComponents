@@ -2,7 +2,7 @@
 
 package com.kinley.features.flights.flux
 
-import com.kinley.features.featurecomponent.flux.Store
+import com.kinley.features.flux.Store
 import com.kinley.features.flights.flux.FlightActions.*
 import kotlinx.coroutines.flow.StateFlow
 

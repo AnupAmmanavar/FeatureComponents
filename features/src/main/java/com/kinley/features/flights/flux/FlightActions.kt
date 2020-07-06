@@ -1,6 +1,6 @@
 package com.kinley.features.flights.flux
 
-import com.kinley.features.featurecomponent.flux.Action
+import com.kinley.features.flux.Action
 import com.kinley.features.flights.domain.Flight
 import java.util.*
 

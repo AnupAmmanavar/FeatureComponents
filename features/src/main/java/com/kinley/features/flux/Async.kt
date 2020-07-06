@@ -1,4 +1,4 @@
-package com.kinley.features.featurecomponent.flux
+package com.kinley.features.flux
 
 sealed class Async<out T> {
     object Uninitialized : Async<Nothing>()
