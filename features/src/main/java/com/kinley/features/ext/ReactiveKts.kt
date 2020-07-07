@@ -2,7 +2,7 @@
 
 package com.kinley.features.ext
 
-import com.kinley.features.featurecomponent.flux.Async
+import com.kinley.features.flux.Async
 import kotlinx.coroutines.flow.*
 
 fun <T> StateFlow<Async<T>>.filterSuccess(): Flow<T> {

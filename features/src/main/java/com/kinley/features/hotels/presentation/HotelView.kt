@@ -20,15 +20,11 @@ class HotelView @JvmOverloads constructor(
     context: Context? = null,
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0
-) :
-    ConstraintLayout(context, attributeSet, defStyle),
-    CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
+) : ConstraintLayout(context, attributeSet, defStyle), CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
 
     private lateinit var ui: HotelUiState
 
-    init {
-        View.inflate(context, R.layout.hotel_view, this)
-    }
+    init { View.inflate(context, R.layout.hotel_view, this) }
 
     fun create(uiState: Flow<HotelUiState>, uiDelegate: HotelUiDelegate) {
 

@@ -15,6 +15,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         vm.hotelComponent.render(hotel_view)
+        vm.flightComponent.render(flight_view)
+        vm.summaryComponent.render(summary_view)
 
     }
 }
