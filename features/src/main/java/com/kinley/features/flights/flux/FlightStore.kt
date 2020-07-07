@@ -2,8 +2,9 @@
 
 package com.kinley.features.flights.flux
 
-import com.kinley.features.flux.Store
+import com.kinley.features.ext.exhaustive
 import com.kinley.features.flights.flux.FlightActions.*
+import com.kinley.features.flux.Store
 import kotlinx.coroutines.flow.StateFlow
 
 
@@ -24,7 +25,3 @@ class FlightStore(
     override fun stateStream(): StateFlow<FlightState> = reducer.state
 
 }
-
-
-val <T> T.exhaustive: T
-    get() = this

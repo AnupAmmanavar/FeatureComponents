@@ -10,4 +10,14 @@ data class FlightState(
     val date: String?,
     val selectedFlight: Flight?,
     val loading: Boolean
-)
+) {
+    companion object {
+
+        fun initState(): FlightState = FlightState(
+            flights = arrayListOf(),
+            date = null,
+            selectedFlight = null,
+            loading = false
+        )
+    }
+}

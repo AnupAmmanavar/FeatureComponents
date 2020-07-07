@@ -82,7 +82,6 @@ class FlightFeatureComponent(
         store.dispatchActions(FetchFlights(date))
     }
 
-
     override fun render(view: FlightView) {
         view.create(uiState, this@FlightFeatureComponent)
     }

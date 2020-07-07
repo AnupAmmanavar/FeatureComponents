@@ -10,14 +10,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 class FlightReducer : Reducer<FlightState> {
 
     override var state: MutableStateFlow<FlightState> =
-        MutableStateFlow(
-            FlightState(
-                flights = arrayListOf(),
-                date = null,
-                selectedFlight = null,
-                loading = false
-            )
-        )
+        MutableStateFlow(FlightState.initState())
 
     fun updateFlights(flights: List<Flight>) = setState {
         copy(flights = flights, loading = false)
