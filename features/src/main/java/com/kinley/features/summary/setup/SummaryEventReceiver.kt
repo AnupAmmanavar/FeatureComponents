@@ -4,5 +4,5 @@ import com.kinley.features.featurecomponent.EventReceiver
 import com.kinley.features.summary.domain.SummaryItem
 
 interface SummaryEventReceiver: EventReceiver {
-    fun updateSummaryItems(items: List<SummaryItem>)
+    fun updateSummaryItems(hashMap: Map<String, SummaryItem>)
 }

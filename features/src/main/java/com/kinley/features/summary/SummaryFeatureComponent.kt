@@ -41,8 +41,8 @@ class SummaryFeatureComponent(
         eventDispatcher.confirmBookingClick()
     }
 
-    override fun updateSummaryItems(items: List<SummaryItem>) {
-        vm.updateItems(items)
+    override fun updateSummaryItems(hashMap: Map<String, SummaryItem>) {
+        vm.updateItems(hashMap.values.toList())
     }
 
 }
