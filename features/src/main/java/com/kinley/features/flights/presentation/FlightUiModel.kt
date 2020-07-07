@@ -6,5 +6,5 @@ package com.kinley.features.flights.presentation
 data class FlightUiModel(
     val flightName: String,
     val airline: String,
-    val flightCost: Double
+    val flightCost: Int
 )

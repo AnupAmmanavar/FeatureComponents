@@ -41,7 +41,7 @@ class FlightFeatureComponent(
 
 
         /**
-         * Some change in events that affected by state change need to be propogated to the Outside world
+         * Some change in events that affected by state change need to be propagated to the Outside world
          */
         store.stateStream()
             .distinctUntilChanged { old, new -> old.selectedFlight == new.selectedFlight }
@@ -63,10 +63,7 @@ class FlightFeatureComponent(
                 flightCost = flight.cost
             )
         }
-        uiState.value =
-            FlightsUiState(
-                flightsUiModel
-            )
+        uiState.value = FlightsUiState(flightsUiModel)
 
     }
 
