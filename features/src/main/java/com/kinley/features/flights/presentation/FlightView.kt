@@ -26,7 +26,7 @@ class FlightView @JvmOverloads constructor(
         View.inflate(context, R.layout.flight_view, this)
     }
 
-    private var ui: FlightsUiState = FlightsUiState()
+    private var ui: FlightsUiState = FlightsUiState.initState()
 
     fun create(uiStateFlow: StateFlow<FlightsUiState>, uiDelegate: FlightUiDelegate) {
 
@@ -35,13 +35,14 @@ class FlightView @JvmOverloads constructor(
                 FlightViewBindingModel_()
                     .id(flightUiModel.flightName)
                     .name(flightUiModel.flightName)
+                    .cost(flightUiModel.flightCost)
+                    .isSelected(flightUiModel.flightName == ui.selectedFlightId)
                     .onClick { _ ->
                         uiDelegate.flightClick(flightUiModel.flightName)
                     }
                     .addTo(this)
             }
         }
-
 
         launch {
             uiStateFlow.collect {

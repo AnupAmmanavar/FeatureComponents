@@ -28,7 +28,7 @@ class FlightFeatureComponent(
 
     private val store: FlightStore = FlightStore(FlightReducer())
 
-    private val uiState = MutableStateFlow(FlightsUiState())
+    private val uiState = MutableStateFlow(FlightsUiState.initState())
 
     init {
         store.stateStream()
@@ -77,7 +77,7 @@ class FlightFeatureComponent(
                 flightCost = flight.cost
             )
         }
-        uiState.value = FlightsUiState(flightsUiModel)
+        uiState.value = FlightsUiState(flightsUiModel, state.selectedFlight?.flightName)
 
     }
 

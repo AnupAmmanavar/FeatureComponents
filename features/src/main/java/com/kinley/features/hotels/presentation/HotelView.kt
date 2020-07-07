@@ -24,9 +24,7 @@ class HotelView @JvmOverloads constructor(
 
     private lateinit var ui: HotelUiState
 
-    init {
-        View.inflate(context, R.layout.hotel_view, this)
-    }
+    init { View.inflate(context, R.layout.hotel_view, this) }
 
     fun create(uiState: Flow<HotelUiState>, uiDelegate: HotelUiDelegate) {
 

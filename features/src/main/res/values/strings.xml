@@ -4,4 +4,5 @@
     <string name="test_hotel">Brindavan</string>
     <string name="test_amount">Rs. 2000</string>
     <string name="test_flight">Air India</string>
+    <string name="choose_flight">Choose flight</string>
 </resources>

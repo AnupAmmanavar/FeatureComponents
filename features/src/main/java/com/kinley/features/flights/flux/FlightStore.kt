@@ -36,7 +36,7 @@ class FlightStore(
         }
     }
 
-    //TODO Can be kept separate
+    // TODO Can be kept separate
     private suspend fun fetchFlights() {
         reducer.setLoading()
         val flights = repository.fetchFlights(Date())
