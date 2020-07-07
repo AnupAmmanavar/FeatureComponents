@@ -1,3 +1,5 @@
+@file:Suppress("EXPERIMENTAL_API_USAGE")
+
 package com.kinley.features.flights.presentation
 
 import android.content.Context
@@ -31,8 +33,11 @@ class FlightView @JvmOverloads constructor(
         rv_flights.withModels {
             ui.flightsUiModel.forEach { flightUiModel ->
                 FlightViewBindingModel_()
-                    .id(flightUiModel.airline)
+                    .id(flightUiModel.flightName)
                     .name(flightUiModel.flightName)
+                    .onClick { _ ->
+                        uiDelegate.flightClick(flightUiModel.flightName)
+                    }
                     .addTo(this)
             }
         }

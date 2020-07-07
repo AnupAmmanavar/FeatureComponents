@@ -13,5 +13,5 @@ sealed class FlightActions: Action {
     data class FetchFlights(val date: Date) : FlightActions()
 
     // Updates the selected flight
-    data class FlightSelected(val selectedFlight: Flight) : FlightActions()
+    data class FlightSelected(val selectedFlightId: String) : FlightActions()
 }

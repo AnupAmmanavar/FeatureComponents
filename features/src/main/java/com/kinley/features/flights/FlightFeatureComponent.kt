@@ -3,7 +3,6 @@
 package com.kinley.features.flights
 
 import com.kinley.features.featurecomponent.FeatureComponent
-import com.kinley.features.flights.domain.Flight
 import com.kinley.features.flights.flux.FlightActions.FetchFlights
 import com.kinley.features.flights.flux.FlightActions.FlightSelected
 import com.kinley.features.flights.flux.FlightReducer
@@ -61,8 +60,8 @@ class FlightFeatureComponent(
         fetchFlights(date)
     }
 
-    override fun flightClick(flight: Flight) {
-        store.dispatchActions(FlightSelected(flight))
+    override fun flightClick(flightId: String) {
+        store.dispatchActions(FlightSelected(flightId))
     }
 
     private fun fetchFlights(date: Date) {

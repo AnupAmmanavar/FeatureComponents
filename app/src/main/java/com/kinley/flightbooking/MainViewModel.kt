@@ -21,11 +21,11 @@ class MainViewModel : HotelEventDispatcher, FlightEventDispatcher {
     val flightComponent: FlightFeatureComponent = FlightFeatureComponent(eventDispatcher = this)
 
     override fun onHotelSelected(hotel: Hotel) {
-        Log.d("BookingTag", "$hotel")
+        Log.d("IdentifierTag", "$hotel")
     }
 
     override fun onFlightSelection(flight: Flight) {
-        TODO("Not yet implemented")
+        Log.d("IdentifierTag", "$flight")
     }
 
     fun onDateChanged(date: Date) {
