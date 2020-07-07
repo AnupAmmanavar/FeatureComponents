@@ -10,13 +10,11 @@ import com.kinley.features.flights.setup.FlightUiDelegate
 import kotlinx.android.synthetic.main.flight_view.view.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-@ExperimentalCoroutinesApi
-class FlightView(
+class FlightView @JvmOverloads constructor(
     context: Context? = null,
     attributeSet: AttributeSet? = null,
     defStyle: Int = 0

@@ -17,12 +17,10 @@ import com.kinley.features.flights.setup.FlightEventReceiver
 import com.kinley.features.flights.setup.FlightUiDelegate
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.*
 import java.util.*
 
 
-@ExperimentalCoroutinesApi
 class FlightFeatureComponent(
     override val eventDispatcher: FlightEventDispatcher
 ) : FeatureComponent<FlightView, FlightEventDispatcher>,
@@ -36,7 +34,7 @@ class FlightFeatureComponent(
     init {
         store.stateStream()
             .distinctUntilChanged { old, new -> old == new }
-            .onEach { render(it) }
+            .onEach { recomposeView(it) }
             .launchIn(this)
 
 
@@ -54,17 +52,9 @@ class FlightFeatureComponent(
 
     }
 
-    private fun render(state: FlightState) {
-
-        val flightsUiModel = state.flights.map { flight ->
-            FlightUiModel(
-                flightName = flight.flightName,
-                airline = flight.airlines,
-                flightCost = flight.cost
-            )
-        }
-        uiState.value = FlightsUiState(flightsUiModel)
-
+    override fun render(view: FlightView) {
+        view.create(uiState, this@FlightFeatureComponent)
+        store.dispatchActions(FetchFlights(Date()))
     }
 
     override fun dateChange(date: Date) {
@@ -79,8 +69,17 @@ class FlightFeatureComponent(
         store.dispatchActions(FetchFlights(date))
     }
 
-    override fun render(view: FlightView) {
-        view.create(uiState, this@FlightFeatureComponent)
+    private fun recomposeView(state: FlightState) {
+
+        val flightsUiModel = state.flights.map { flight ->
+            FlightUiModel(
+                flightName = flight.flightName,
+                airline = flight.airlines,
+                flightCost = flight.cost
+            )
+        }
+        uiState.value = FlightsUiState(flightsUiModel)
+
     }
 
 }
