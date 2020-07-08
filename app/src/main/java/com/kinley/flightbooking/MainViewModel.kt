@@ -4,7 +4,6 @@ import com.kinley.features.flights.FlightFeatureComponent
 import com.kinley.features.flights.domain.Flight
 import com.kinley.features.flights.setup.FlightEventDispatcher
 import com.kinley.features.hotels.HotelFeatureComponent
-import com.kinley.features.hotels.HotelViewModel
 import com.kinley.features.hotels.domain.Hotel
 import com.kinley.features.hotels.setup.HotelEventDispatcher
 import com.kinley.features.summary.SummaryFeatureComponent
@@ -14,36 +13,39 @@ import com.kinley.features.summary.setup.SummaryEventReceiver
 import java.util.*
 import kotlin.collections.HashMap
 
-class MainViewModel : HotelEventDispatcher, FlightEventDispatcher, SummaryEventDispatcher {
+class MainViewModel {
 
-    val hotelComponent: HotelFeatureComponent =
-        HotelFeatureComponent(
-            eventDispatcher = this,
-            vm = HotelViewModel()
-        )
+    val hotelComponent = HotelFeatureComponent(eventDispatcher = HotelEventDispatchListener())
+    val flightComponent = FlightFeatureComponent(eventDispatcher = FlightEventDispatchListener())
+    val summaryComponent = SummaryFeatureComponent(eventDispatcher = SummaryEventDispatchListener())
 
-    val summaryItems: HashMap<String, SummaryItem> = HashMap()
+    private val summaryEventReceiver: SummaryEventReceiver = summaryComponent
 
-    val flightComponent: FlightFeatureComponent = FlightFeatureComponent(eventDispatcher = this)
+    private val summaryItems: HashMap<String, SummaryItem> = HashMap()
 
-    val summaryComponent: SummaryFeatureComponent = SummaryFeatureComponent(this)
-    val summaryEventReceiver: SummaryEventReceiver = summaryComponent
-
-    override fun onHotelSelected(hotel: Hotel) {
-        updateSummary("hotel", SummaryItem(R.drawable.icon_hotel, hotel.name, hotel.cost))
+    inner class HotelEventDispatchListener : HotelEventDispatcher {
+        override fun onHotelSelected(hotel: Hotel) {
+            updateSummary("hotel", SummaryItem(R.drawable.icon_hotel, hotel.name, hotel.cost))
+        }
     }
 
-    override fun onFlightSelection(flight: Flight) {
-        updateSummary("flight", SummaryItem(R.drawable.icon_flight, flight.flightName, flight.cost))
+    inner class FlightEventDispatchListener : FlightEventDispatcher {
+        override fun onFlightSelection(flight: Flight) {
+            updateSummary("flight", SummaryItem(R.drawable.icon_flight, flight.flightName, flight.cost))
+        }
+
+    }
+
+    inner class SummaryEventDispatchListener: SummaryEventDispatcher {
+        override fun confirmBookingClick() {
+
+        }
+
     }
 
     private fun updateSummary(identifier: String, summaryItem: SummaryItem) {
         summaryItems[identifier] = summaryItem
         summaryEventReceiver.updateSummaryItems(summaryItems)
-    }
-
-    override fun confirmBookingClick() {
-
     }
 
     fun onDateChanged(date: Date) {

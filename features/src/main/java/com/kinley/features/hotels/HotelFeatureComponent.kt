@@ -15,9 +15,10 @@ import java.util.*
 
 @Suppress("EXPERIMENTAL_API_USAGE")
 class HotelFeatureComponent(
-    override val eventDispatcher: HotelEventDispatcher,
-    private val vm: HotelViewModel
+    override val eventDispatcher: HotelEventDispatcher
 ) : FeatureComponent<HotelView, HotelEventDispatcher>, HotelEventReceiver, HotelUiDelegate, CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
+
+    private val vm: HotelViewModel = HotelViewModel()
 
     private val uiState: Flow<HotelUiState> =
         combine(vm.hotels, vm.hotelSelected) { hotels, selectedHotel ->
