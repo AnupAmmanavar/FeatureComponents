@@ -22,7 +22,7 @@ class HotelFeatureComponent(
     private val uiState: Flow<HotelUiState> =
         combine(vm.hotels, vm.hotelSelected) { hotels, selectedHotel ->
             HotelUiState(
-                hotels = hotels.map { HotelUiModel(it.name, it.cost) },
+                hotels = hotels.map { HotelUiModel(it.identifier, it.name, it.cost) },
                 selectedHotel = selectedHotel
             )
         }

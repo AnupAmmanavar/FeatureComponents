@@ -34,12 +34,12 @@ class HotelView @JvmOverloads constructor(
 
             ui.hotels.onEach { hotel ->
                 HotelViewBindingModel_()
-                    .id(hotel.name)
+                    .id(hotel.id)
                     .name(hotel.name)
                     .cost(hotel.cost)
                     .isSelected(hotel.name == ui.selectedHotel?.name)
                     .onClick { _ ->
-                        uiDelegate.onHotelClicked(hotel.name)
+                        uiDelegate.onHotelClicked(hotel.id)
                     }
                     .addTo(this)
             }

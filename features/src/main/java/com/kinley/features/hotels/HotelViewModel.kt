@@ -34,7 +34,7 @@ class HotelViewModel : EventReceiver {
 
     fun updateSelectedHotel(id: String) {
         _hotelSelectedMutable.value = _hotelsMutable.value.first {
-            it.name == id
+            it.identifier == id
         }
     }
 
@@ -46,7 +46,7 @@ class HotelRepository {
     fun getHotels(date: Date): List<Hotel> {
         val hotelNames = listOf("Brindavan", "Mandara", "Elivs", "Orlis", "Karle", "Krishna Sagar", "Orion")
         return hotelNames.map {
-            Hotel(it, DataFactory.provideInt(), "Dharwad")
+            Hotel(UUID.randomUUID().toString(), it, DataFactory.provideInt(), "Dharwad")
         }
     }
 
