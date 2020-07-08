@@ -23,14 +23,13 @@ class SummaryFeatureComponent(
         .map {
             val summaryUiModels = it.summaryItems.map { summaryItem ->
                 SummaryUiModel(
+                    summaryItem.identifier,
                     summaryItem.drawableId,
                     summaryItem.name,
                     summaryItem.amount
                 )
             }
-            SummaryUiState(
-                summaryUiModels = summaryUiModels,
-                totalAmount = it.summaryItems.sumBy { it.amount })
+            SummaryUiState(summaryUiModels = summaryUiModels, totalAmount = it.totalAmount)
         }
 
     override fun render(view: SummaryView) {
@@ -39,6 +38,11 @@ class SummaryFeatureComponent(
 
     override fun onPlaceOrderClick() {
         eventDispatcher.confirmBookingClick()
+    }
+
+    override fun removeClick(name: String) {
+        vm.removeItem(name)
+        eventDispatcher.removeClickListener(name)
     }
 
     override fun updateSummaryItems(hashMap: Map<String, SummaryItem>) {

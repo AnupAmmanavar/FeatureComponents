@@ -9,6 +9,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:drawableStart="@drawable/icon_flight"
+        android:drawablePadding="8dp"
         android:text="@string/choose_flight"
         android:textSize="@dimen/sp_14"
         android:textStyle="bold"

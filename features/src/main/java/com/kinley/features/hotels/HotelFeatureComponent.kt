@@ -40,6 +40,10 @@ class HotelFeatureComponent(
         vm.dateChange(date)
     }
 
+    override fun onRemoveSelection() {
+        vm.removeSelectedHotel()
+    }
+
     /**
      * Notify the business-logic layer of the FeatureComponent i.e [HotelViewModel] and
      * also dispatches the event to the outside world.

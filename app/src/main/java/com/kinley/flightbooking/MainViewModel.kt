@@ -1,5 +1,7 @@
 package com.kinley.flightbooking
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.kinley.features.flights.FlightFeatureComponent
 import com.kinley.features.flights.domain.Flight
 import com.kinley.features.flights.setup.FlightEventDispatcher
@@ -25,13 +27,13 @@ class MainViewModel {
 
     inner class HotelEventDispatchListener : HotelEventDispatcher {
         override fun onHotelSelected(hotel: Hotel) {
-            updateSummary("hotel", SummaryItem(R.drawable.icon_hotel, hotel.name, hotel.cost))
+            updateSummary("hotel", SummaryItem("hotel", R.drawable.icon_hotel, hotel.name, hotel.cost))
         }
     }
 
     inner class FlightEventDispatchListener : FlightEventDispatcher {
         override fun onFlightSelection(flight: Flight) {
-            updateSummary("flight", SummaryItem(R.drawable.icon_flight, flight.flightName, flight.cost))
+            updateSummary("flight", SummaryItem("flight", R.drawable.icon_flight, flight.flightName, flight.cost))
         }
 
     }
@@ -39,6 +41,19 @@ class MainViewModel {
     inner class SummaryEventDispatchListener: SummaryEventDispatcher {
         override fun confirmBookingClick() {
 
+        }
+
+        override fun removeClickListener(identifier: String) {
+            when (identifier) {
+                "hotel" -> hotelComponent.onRemoveSelection()
+                "flight" -> flightComponent.onRemoveSelection()
+            }
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                summaryItems.keys.removeIf {
+                    identifier == it
+                }
+            }
         }
 
     }

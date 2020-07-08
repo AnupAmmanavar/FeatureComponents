@@ -8,6 +8,7 @@ data class SummaryUiState(
 )
 
 data class SummaryUiModel(
+    val identifier: String,
     @DrawableRes val icon: Int,
     val name: String,
     val amount: Int

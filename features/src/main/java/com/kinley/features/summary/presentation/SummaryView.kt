@@ -33,8 +33,11 @@ class SummaryView @JvmOverloads constructor(
         rv_summary_items.withModels {
             ui.summaryUiModels.forEach {
                 SummaryItemBindingModel_()
-                    .id(it.name)
+                    .id(it.identifier)
                     .uiModel(it)
+                    .cancelClick { _ ->
+                        uiDelegate.removeClick(it.identifier)
+                    }
                     .addTo(this)
             }
         }

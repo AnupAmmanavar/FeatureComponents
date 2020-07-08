@@ -5,4 +5,6 @@ import java.util.*
 
 interface HotelEventReceiver : EventReceiver {
     fun onDateChange(date: Date)
+
+    fun onRemoveSelection()
 }

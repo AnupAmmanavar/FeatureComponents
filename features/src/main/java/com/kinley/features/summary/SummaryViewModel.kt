@@ -1,5 +1,7 @@
 package com.kinley.features.summary
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.kinley.features.summary.domain.SummaryItem
 import com.kinley.features.summary.domain.SummaryState
 import kotlinx.coroutines.CoroutineScope
@@ -15,5 +17,13 @@ class SummaryViewModel : CoroutineScope by CoroutineScope(Dispatchers.Main.immed
 
     fun updateItems(items: List<SummaryItem>) {
         _mutableSummaryItems.value = SummaryState(items, items.sumBy { it.amount })
+    }
+
+    fun removeItem(identifier: String) {
+        val summaryItemsMap= _mutableSummaryItems.value.summaryItems as MutableList
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            summaryItemsMap.removeIf { it.identifier == identifier }
+        }
+        updateItems(summaryItemsMap)
     }
 }

@@ -4,4 +4,6 @@ import com.kinley.features.featurecomponent.EventDispatcher
 
 interface SummaryEventDispatcher: EventDispatcher {
     fun confirmBookingClick()
+
+    fun removeClickListener(identifier: String)
 }

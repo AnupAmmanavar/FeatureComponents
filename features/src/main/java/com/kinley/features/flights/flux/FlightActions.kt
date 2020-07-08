@@ -14,4 +14,6 @@ sealed class FlightActions: Action {
 
     // Updates the selected flight
     data class FlightSelected(val selectedFlightId: String) : FlightActions()
+
+    object RemoveSelectedFlight : FlightActions()
 }

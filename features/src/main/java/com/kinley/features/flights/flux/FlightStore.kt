@@ -32,6 +32,7 @@ class FlightStore(
                     reducer.updateSelectedFlight(selectedFlight)
                 }
                 is FetchFlights -> fetchFlights()
+                is RemoveSelectedFlight -> reducer.removeFlightSelection()
             }.exhaustive
         }
     }

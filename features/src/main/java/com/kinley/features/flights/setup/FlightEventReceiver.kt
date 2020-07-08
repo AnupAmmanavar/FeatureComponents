@@ -10,4 +10,6 @@ interface FlightEventReceiver : EventReceiver {
     // Change in date will let the FlightComponent to update itself.
     // Makes an API call to fetch the flights for the specified date
     fun dateChange(date: Date)
+
+    fun onRemoveSelection()
 }

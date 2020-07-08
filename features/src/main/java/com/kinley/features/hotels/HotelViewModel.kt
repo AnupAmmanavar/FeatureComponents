@@ -38,6 +38,10 @@ class HotelViewModel : EventReceiver {
         }
     }
 
+    fun removeSelectedHotel() {
+        _hotelSelectedMutable.value = null
+    }
+
 }
 
 

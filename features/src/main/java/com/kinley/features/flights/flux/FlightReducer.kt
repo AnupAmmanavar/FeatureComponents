@@ -23,5 +23,9 @@ class FlightReducer : Reducer<FlightState> {
     fun setLoading() = setState {
         copy(loading = true)
     }
+
+    fun removeFlightSelection() = setState {
+        copy(selectedFlight = null)
+    }
 }
 
