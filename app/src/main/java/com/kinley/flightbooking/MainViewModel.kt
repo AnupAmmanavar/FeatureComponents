@@ -27,13 +27,13 @@ class MainViewModel {
 
     inner class HotelEventDispatchListener : HotelEventDispatcher {
         override fun onHotelSelected(hotel: Hotel) {
-            updateSummary("hotel", SummaryItem("hotel", R.drawable.icon_hotel, hotel.name, hotel.cost))
+            updateSummary(SummaryItem("hotel", R.drawable.icon_hotel, hotel.name, hotel.cost))
         }
     }
 
     inner class FlightEventDispatchListener : FlightEventDispatcher {
         override fun onFlightSelection(flight: Flight) {
-            updateSummary("flight", SummaryItem("flight", R.drawable.icon_flight, flight.flightName, flight.cost))
+            updateSummary(SummaryItem("flight", R.drawable.icon_flight, flight.flightName, flight.cost))
         }
 
     }
@@ -58,8 +58,8 @@ class MainViewModel {
 
     }
 
-    private fun updateSummary(identifier: String, summaryItem: SummaryItem) {
-        summaryItems[identifier] = summaryItem
+    private fun updateSummary(summaryItem: SummaryItem) {
+        summaryItems[summaryItem.identifier] = summaryItem
         summaryEventReceiver.updateSummaryItems(summaryItems)
     }
 
