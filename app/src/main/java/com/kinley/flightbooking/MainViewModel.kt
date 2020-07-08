@@ -1,6 +1,5 @@
 package com.kinley.flightbooking
 
-import android.util.Log
 import com.kinley.features.flights.FlightFeatureComponent
 import com.kinley.features.flights.domain.Flight
 import com.kinley.features.flights.setup.FlightEventDispatcher
@@ -31,11 +30,11 @@ class MainViewModel : HotelEventDispatcher, FlightEventDispatcher, SummaryEventD
     val summaryEventReceiver: SummaryEventReceiver = summaryComponent
 
     override fun onHotelSelected(hotel: Hotel) {
-        updateSummary("hotel", SummaryItem(R.drawable.ic_baseline_hotel_24, "Hotel ${hotel.name}", hotel.cost))
+        updateSummary("hotel", SummaryItem(R.drawable.icon_hotel, hotel.name, hotel.cost))
     }
 
     override fun onFlightSelection(flight: Flight) {
-        updateSummary("flight", SummaryItem(R.drawable.ic_baseline_flight_24, "Flight ${flight.flightName}", flight.cost))
+        updateSummary("flight", SummaryItem(R.drawable.icon_flight, flight.flightName, flight.cost))
     }
 
     private fun updateSummary(identifier: String, summaryItem: SummaryItem) {

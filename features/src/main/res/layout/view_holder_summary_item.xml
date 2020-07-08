@@ -30,7 +30,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:drawableStart="@drawable/ic_baseline_hotel_24"
+            tools:drawableStart="@drawable/icon_hotel"
             app:summaryItem="@{uiModel}"
             tools:text="@string/test_hotel" />
 

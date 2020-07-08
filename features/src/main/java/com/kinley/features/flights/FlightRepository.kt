@@ -8,7 +8,7 @@ class FlightRepository {
     suspend fun fetchFlights(date: Date): List<Flight> {
         return listOf("Air India", "Qatar", "Air Asia", "Indigo", "SpiceJet", "Vistara", "Go Air", "Etihad Airways")
             .map {
-                Flight(it, it, DataFactory.provideInt())
+                Flight(UUID.randomUUID().toString(), it, it, DataFactory.provideInt())
             }
     }
 }

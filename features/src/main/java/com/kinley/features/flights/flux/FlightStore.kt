@@ -28,7 +28,7 @@ class FlightStore(
             when (action) {
                 is FlightsFetched -> reducer.updateFlights(action.flights)
                 is FlightSelected -> {
-                    val selectedFlight = reducer.state.value.flights.first { it.flightName == action.selectedFlightId }
+                    val selectedFlight = reducer.state.value.flights.first { it.identifier == action.selectedFlightId }
                     reducer.updateSelectedFlight(selectedFlight)
                 }
                 is FetchFlights -> fetchFlights()

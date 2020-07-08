@@ -28,6 +28,8 @@ class SummaryView @JvmOverloads constructor(
 
     fun create(uiState: Flow<SummaryUiState>, uiDelegate: SummaryUiDelegate) {
 
+        btn_book.setOnClickListener { uiDelegate.onPlaceOrderClick() }
+
         rv_summary_items.withModels {
             ui.summaryUiModels.forEach {
                 SummaryItemBindingModel_()

@@ -33,12 +33,12 @@ class FlightView @JvmOverloads constructor(
         rv_flights.withModels {
             ui.flightsUiModel.forEach { flightUiModel ->
                 FlightViewBindingModel_()
-                    .id(flightUiModel.flightName)
+                    .id(flightUiModel.identifier)
                     .name(flightUiModel.flightName)
                     .cost(flightUiModel.flightCost)
-                    .isSelected(flightUiModel.flightName == ui.selectedFlightId)
+                    .isSelected(flightUiModel.identifier == ui.selectedFlightId)
                     .onClick { _ ->
-                        uiDelegate.flightClick(flightUiModel.flightName)
+                        uiDelegate.flightClick(flightUiModel.identifier)
                     }
                     .addTo(this)
             }

@@ -72,12 +72,13 @@ class FlightFeatureComponent(
 
         val flightsUiModel = state.flights.map { flight ->
             FlightUiModel(
+                identifier = flight.identifier,
                 flightName = flight.flightName,
                 airline = flight.airlines,
                 flightCost = flight.cost
             )
         }
-        uiState.value = FlightsUiState(flightsUiModel, state.selectedFlight?.flightName)
+        uiState.value = FlightsUiState(flightsUiModel, state.selectedFlight?.identifier)
 
     }
 
