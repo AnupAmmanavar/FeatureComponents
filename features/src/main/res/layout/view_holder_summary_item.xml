@@ -6,12 +6,12 @@
     <data>
 
         <variable
-            name="amount"
-            type="Integer" />
+            name="uiModel"
+            type="com.kinley.features.summary.presentation.SummaryUiModel" />
 
         <variable
-            name="item"
-            type="String" />
+            name="cancelClick"
+            type="android.view.View.OnClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -26,10 +26,12 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
+            android:drawablePadding="8dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:text="@{item}"
+            android:drawableStart="@drawable/ic_baseline_hotel_24"
+            app:summaryItem="@{uiModel}"
             tools:text="@string/test_hotel" />
 
         <TextView
@@ -40,7 +42,7 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginBottom="16dp"
-            app:amount="@{amount}"
+            app:amount="@{uiModel.amount}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

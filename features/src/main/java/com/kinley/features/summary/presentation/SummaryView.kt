@@ -32,8 +32,7 @@ class SummaryView @JvmOverloads constructor(
             ui.summaryUiModels.forEach {
                 SummaryItemBindingModel_()
                     .id(it.name)
-                    .item(it.name)
-                    .amount(it.amount)
+                    .uiModel(it)
                     .addTo(this)
             }
         }

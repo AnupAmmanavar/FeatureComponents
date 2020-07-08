@@ -31,11 +31,11 @@ class MainViewModel : HotelEventDispatcher, FlightEventDispatcher, SummaryEventD
     val summaryEventReceiver: SummaryEventReceiver = summaryComponent
 
     override fun onHotelSelected(hotel: Hotel) {
-        updateSummary("hotel", SummaryItem(R.drawable.ic_launcher_background, "Hotel ${hotel.name}", hotel.cost))
+        updateSummary("hotel", SummaryItem(R.drawable.ic_baseline_hotel_24, "Hotel ${hotel.name}", hotel.cost))
     }
 
     override fun onFlightSelection(flight: Flight) {
-        updateSummary("flight", SummaryItem(R.drawable.ic_launcher_background, "Flight ${flight.flightName}", flight.cost))
+        updateSummary("flight", SummaryItem(R.drawable.ic_baseline_flight_24, "Flight ${flight.flightName}", flight.cost))
     }
 
     private fun updateSummary(identifier: String, summaryItem: SummaryItem) {
