@@ -26,7 +26,7 @@ class FlightFeatureComponent(
     FlightEventReceiver,
     FlightUiDelegate, CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
 
-    private val store: FlightStore = FlightStore(FlightReducer(), listOf(Logger(), FlightApi(FlightRepository())))
+    private val store: FlightStore = FlightStore(listOf(Logger(), FlightApi(FlightRepository())))
 
     private val uiState = MutableStateFlow(FlightsUiState.initState())
 

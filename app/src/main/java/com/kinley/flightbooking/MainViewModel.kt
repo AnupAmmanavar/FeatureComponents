@@ -1,7 +1,6 @@
 package com.kinley.flightbooking
 
 import android.os.Build
-import androidx.annotation.RequiresApi
 import com.kinley.features.flights.FlightFeatureComponent
 import com.kinley.features.flights.domain.Flight
 import com.kinley.features.flights.setup.FlightEventDispatcher
