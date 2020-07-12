@@ -1,7 +1,8 @@
-package com.kinley.features.flights.flux
+package com.kinley.features.flights.flux.middleware
 
 import com.kinley.features.flights.FlightRepository
-import com.kinley.features.flux.FlightActionProcessor
+import com.kinley.features.flights.flux.FlightActions
+import com.kinley.features.flights.flux.FlightStore
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.coroutineScope
@@ -18,7 +19,11 @@ class FlightApi(
                 is FlightActions.FetchFlights -> {
                     launch {
                         val flights = flightRepository.fetchFlights(Date())
-                        store.dispatchActions(FlightActions.FlightsFetched(flights))
+                        store.dispatchActions(
+                            FlightActions.FlightsFetched(
+                                flights
+                            )
+                        )
                     }
                     FlightActions.Loading
                 }

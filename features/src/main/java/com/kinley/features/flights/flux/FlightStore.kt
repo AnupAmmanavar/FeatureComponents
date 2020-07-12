@@ -5,7 +5,7 @@ package com.kinley.features.flights.flux
 import com.kinley.features.ext.Ignore
 import com.kinley.features.ext.exhaustive
 import com.kinley.features.flights.flux.FlightActions.*
-import com.kinley.features.flux.FlightActionProcessor
+import com.kinley.features.flights.flux.middleware.FlightActionProcessor
 import com.kinley.features.flux.Store
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

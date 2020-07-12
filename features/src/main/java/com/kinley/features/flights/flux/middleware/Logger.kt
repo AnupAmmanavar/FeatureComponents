@@ -1,9 +1,11 @@
-package com.kinley.features.flights.flux
+package com.kinley.features.flights.flux.middleware
 
 import android.util.Log
-import com.kinley.features.flux.FlightActionProcessor
+import com.kinley.features.flights.flux.FlightActions
+import com.kinley.features.flights.flux.FlightStore
 
-class Logger : FlightActionProcessor {
+class Logger :
+    FlightActionProcessor {
 
     override suspend fun processAction(
         store: FlightStore,

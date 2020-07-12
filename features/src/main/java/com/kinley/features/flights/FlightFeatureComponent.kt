@@ -6,6 +6,8 @@ import com.kinley.features.featurecomponent.FeatureComponent
 import com.kinley.features.flights.flux.*
 import com.kinley.features.flights.flux.FlightActions.FetchFlights
 import com.kinley.features.flights.flux.FlightActions.FlightSelected
+import com.kinley.features.flights.flux.middleware.FlightApi
+import com.kinley.features.flights.flux.middleware.Logger
 import com.kinley.features.flights.presentation.FlightUiModel
 import com.kinley.features.flights.presentation.FlightView
 import com.kinley.features.flights.presentation.FlightsUiState
