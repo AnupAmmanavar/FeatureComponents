@@ -29,7 +29,6 @@ class FlightStore(
         launch {
             val newAction = getProcessedAction(action)
             consumeAction(newAction)
-
         }
     }
 
@@ -46,8 +45,10 @@ class FlightStore(
         when (action) {
             is FlightsFetched -> setState { copy(flights = action.flights, loading = false) }
             is FlightSelected -> {
-                val selectedFlight = state.value.flights.first { it.identifier == action.selectedFlightId }
-                setState { copy(selectedFlight = selectedFlight) }
+                setState {
+                    val selectedFlight = flights.first { it.identifier == action.selectedFlightId }
+                    copy(selectedFlight = selectedFlight)
+                }
             }
             is FetchFlights -> Ignore()
             is RemoveSelectedFlight -> setState { copy(selectedFlight = null) }
