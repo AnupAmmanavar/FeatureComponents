@@ -1,6 +1,7 @@
 package com.kinley.features.flights.flux
 
 import com.kinley.features.flights.domain.Flight
+import com.kinley.features.flux.AppState
 
 /**
  * TODO Loading and Error should not be handled here
@@ -10,7 +11,7 @@ data class FlightState(
     val date: String?,
     val selectedFlight: Flight?,
     val loading: Boolean
-) {
+): AppState {
     companion object {
 
         fun initState(): FlightState = FlightState(

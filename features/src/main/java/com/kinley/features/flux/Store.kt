@@ -4,7 +4,7 @@ package com.kinley.features.flux
 
 import kotlinx.coroutines.flow.StateFlow
 
-interface Store<S, A: Action> {
+interface Store<S: AppState, A: Action> {
 
     fun stateStream(): StateFlow<S>
 

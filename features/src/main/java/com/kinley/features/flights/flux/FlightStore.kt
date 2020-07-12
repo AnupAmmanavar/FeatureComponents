@@ -2,9 +2,12 @@
 
 package com.kinley.features.flights.flux
 
+import android.util.Log
+import com.kinley.features.ext.Ignore
 import com.kinley.features.ext.exhaustive
 import com.kinley.features.flights.FlightRepository
 import com.kinley.features.flights.flux.FlightActions.*
+import com.kinley.features.flux.FlightActionProcessor
 import com.kinley.features.flux.Store
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -18,32 +21,62 @@ class FlightStore(
 ) : Store<FlightState, FlightActions>,
     CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
 
-    private val repository: FlightRepository =
-        FlightRepository()
+    private val actionProcessors = listOf(Logger(), FlightApi(FlightRepository()))
 
     override fun dispatchActions(action: FlightActions) = processIntent(action)
 
     private fun processIntent(action: FlightActions) {
         launch {
-            when (action) {
-                is FlightsFetched -> reducer.updateFlights(action.flights)
+            var processedAction = action
+            actionProcessors.forEach {
+                processedAction = it.processAction(this@FlightStore, processedAction)
+            }
+
+
+            when (val newAction = processedAction) {
+                is FlightsFetched -> reducer.updateFlights(newAction.flights)
                 is FlightSelected -> {
-                    val selectedFlight = reducer.state.value.flights.first { it.identifier == action.selectedFlightId }
+                    val selectedFlight =
+                        reducer.state.value.flights.first { it.identifier == newAction.selectedFlightId }
                     reducer.updateSelectedFlight(selectedFlight)
                 }
-                is FetchFlights -> fetchFlights()
+                is FetchFlights -> Ignore()
                 is RemoveSelectedFlight -> reducer.removeFlightSelection()
+                is Loading -> Ignore()
             }.exhaustive
         }
     }
 
-    // TODO Can be kept separate
-    private suspend fun fetchFlights() {
-        reducer.setLoading()
-        val flights = repository.fetchFlights(Date())
-        dispatchActions(FlightsFetched(flights))
+    override fun stateStream(): StateFlow<FlightState> = reducer.state
+
+    inner class Logger : FlightActionProcessor {
+
+        override suspend fun processAction(
+            store: FlightStore,
+            action: FlightActions
+        ): FlightActions {
+            Log.d("Logger", "$action")
+            return action
+        }
+
     }
 
-    override fun stateStream(): StateFlow<FlightState> = reducer.state
+    inner class FlightApi(
+        private val flightRepository: FlightRepository
+    ) : FlightActionProcessor {
+
+        override suspend fun processAction(store: FlightStore, action: FlightActions) =
+            when (action) {
+                is FetchFlights -> {
+                    launch {
+                        val flights = flightRepository.fetchFlights(Date())
+                        store.dispatchActions(FlightsFetched(flights))
+                    }
+                    Loading
+                }
+                else -> action
+            }
+
+    }
 
 }
