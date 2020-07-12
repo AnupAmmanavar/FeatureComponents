@@ -3,12 +3,9 @@
 package com.kinley.features.flights
 
 import com.kinley.features.featurecomponent.FeatureComponent
-import com.kinley.features.flights.flux.FlightActions
+import com.kinley.features.flights.flux.*
 import com.kinley.features.flights.flux.FlightActions.FetchFlights
 import com.kinley.features.flights.flux.FlightActions.FlightSelected
-import com.kinley.features.flights.flux.FlightReducer
-import com.kinley.features.flights.flux.FlightState
-import com.kinley.features.flights.flux.FlightStore
 import com.kinley.features.flights.presentation.FlightUiModel
 import com.kinley.features.flights.presentation.FlightView
 import com.kinley.features.flights.presentation.FlightsUiState
@@ -27,7 +24,7 @@ class FlightFeatureComponent(
     FlightEventReceiver,
     FlightUiDelegate, CoroutineScope by CoroutineScope(Dispatchers.Main.immediate) {
 
-    private val store: FlightStore = FlightStore(FlightReducer())
+    private val store: FlightStore = FlightStore(FlightReducer(), listOf(Logger(), FlightApi(FlightRepository())))
 
     private val uiState = MutableStateFlow(FlightsUiState.initState())
 
