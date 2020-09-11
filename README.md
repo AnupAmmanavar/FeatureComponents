@@ -138,5 +138,73 @@ interface FeatureComponent<V:ViewGroup>:  UI<V>
 * HLC attaches it. `render` is a public API for the HLC to render the FeatureComponent by passing the view(More detail later in Implementation 👇).
 
 
+## Implementation of Low-level components.
+
+Defining the FeatureComponent Contract
+
+```kotlin
+interface FeatureComponent<V: ViewGroup, E: EventDispatcher> : UI<V> {
+    val eventDispatcher: E
+}
+```
+* All FeatureComponents implement this interface. It is generic on EventDispatcher.
+
+### 1. EventDispatcher
+
+```kotlin
+class FlightFeatureComponent(
+    override val eventDispatcher: FlightEventDispatcher
+) : FeatureComponent<FlightView, FlightEventDispatcher> {
+    
+    fun onFlightSelected(flight: Flight) {
+        eventDispatcher.onFlightSelection(flight)
+    }
+}
+```
+* `EventDispatcher` is a dependency of the Feature Component.
+* The component passes on the events to this interface. In this case, it sends the `selectedFlight` event.
+
+### 2. EventReceiver
+```kotlin
+class FlightFeatureComponent(
+    override val eventDispatcher: FlightEventDispatcher
+) : FeatureComponent<FlightView, FlightEventDispatcher>, FlightEventReceiver {
+
+    private val store: FlightStore = TODO("Business logic implementation of Feature component")
+    
+    override fun dateChange(date: Date) {
+        store.dispatchActions(FetchFlights(date))
+    }
+
+    override fun onRemoveSelection() {
+        store.dispatchActions(FlightAction.RemoveSelectedFlight)
+    }
+}
+```
+* Flight FeatureComponent implements the `FlightEventReceiver` interface. This provides it the capability to receive events from the HLC.
+In this case, it receives `dateChange` and `removeSelection` events and passes them to its business layer(store).
+
+### 3. Defining and managing the UI
+
+```kotlin
+class FlightFeatureComponent(
+    override val eventDispatcher: FlightEventDispatcher
+) : FeatureComponent<FlightView, FlightEventDispatcher>, FlightEventReceiver, FlightUiDelegate {
+
+    private val uiState = MutableStateFlow(FlightsUiState.initState())
+    private val store = FlightStore()
+    
+    override fun render(view: FlightView) {
+        view.prepare(uiState, uiDelegate = this@FlightFeatureComponent)
+    }
+    
+    override fun onFlightClick(flight: Flight) {
+         store.updateSelectedFlight(flight)
+    }
+}
+
+```
+* Flight FeatureComponent implements the UI interface on FlightView defining its own UI.
+
 
 
