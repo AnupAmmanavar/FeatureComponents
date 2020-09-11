@@ -207,4 +207,70 @@ class FlightFeatureComponent(
 * Flight FeatureComponent implements the UI interface on FlightView defining its own UI.
 
 
+## Design & Implementation of High-level Component(Booking screen)
+Divide it into 2 parts — Business layer and View-Layer
+
+### 1. Business-layer
+```kotlin
+class BookingScreenViewModel {
+    ...
+    val flightComponent = FlightFeatureComponent(eventDispatcher = FlightEventDispatchListener())
+
+    // Listener to receive the events from the Component's EventReceiver
+    inner class FlightEventDispatchListener : FlightEventDispatcher {
+        override fun onFlightSelection(flight: Flight) {
+            // Handle the flight selection in the business layer of the Booking screen (HLC)
+        }
+    }
+    ...
+}
+```
+* It creates the Feature Components.
+* **To receive** events from the **FeatureComponents(LLC)**, HLC implements the dispatcher (`FlightEventDispatcher`) in the form of inner class (`FlightEventDispatchListener`), which is then passed on as a dependency for component creation(👆).
+
+```kotlin
+class FlightFeatureComponent(): FlightEventReceiver
+
+class BookingScreenViewModel {
+    ...
+    val flightComponent = FlightFeatureComponent(eventDispatcher = FlightEventDispatchListener())
+    
+    // An event to clear all the selections in the screen 
+    fun clearSelections() {
+        flightComponent.onRemoveSelection()
+    }
+    ...
+ }
+```
+
+* **To send** events to Feature Component, HLC can directly call the methods of FlightComponent, as it has the capability to receive events. See `clearSelections`.
+
+### 2. View-layer
+
+```kotlin
+class BookingScreen : Fragment() {
+    private val vm = MainViewModel()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        ...
+        vm.flightComponent.render(flight_view)
+    }
+}
+```
+
+* It is only responsible for rendering the FeatureComponents created by the business-layer.
+
+
+## High-Level Component as a Mediator
+
+**What if HLC components have a large number of components?** The HLC would be over-burdened with synchronizing and passing the events between different FeatureComponents.
+
+* A better approach would be to make the HLC a mediator for passing events to FeatureComponents.
+* Whenever it receives an event from one FeatureComponent, it passes the event blindly to other FeatureComponents.
+* All FeatureComponent receive all the events but chooses the events on which they want to react and ignore the rest.
+* This way both are loosely coupled and any component can be attached to the HLC.
+
+
+
+
 
